@@ -1,4 +1,5 @@
 import numpy as np
+import cv2
 from functools import partial
 import PIL.Image
 import tensorflow as tf
@@ -73,8 +74,13 @@ def main():
       
     def showarray(a):
         a = np.uint8(np.clip(a, 0, 1)*255)
+        plt.axis("off")
         plt.imshow(a)
         plt.show()
+        a=cv2.cvtColor(a, cv2.COLOR_BGR2RGB)
+        cv2.imshow("output", a)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
         
     def visstd(a, s=0.1):
         '''Normalize the image range for visualization'''
@@ -157,7 +163,6 @@ def main():
             #this will usually be like 3 or 4 octaves
             #Step 5 output deep dream image via matplotlib
             showarray(img/255.0)
-
   
    	#Step 3 - Pick a layer to enhance our image
     layer = 'mixed4d_3x3_bottleneck_pre_relu'
